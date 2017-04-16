@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="com.github.carljmosca_zmjet_jar_1.0-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.hibernate.ejb.HibernatePersistence</provider>
+    <class>com.github.carljmosca.zmv.entity.Events</class>
+    <class>com.github.carljmosca.zmv.entity.Zones</class>
+    <class>com.github.carljmosca.zmv.entity.TriggersX10</class>
+    <class>com.github.carljmosca.zmv.entity.Config</class>
+    <class>com.github.carljmosca.zmv.entity.ZonePresets</class>
+    <class>com.github.carljmosca.zmv.entity.Groups</class>
+    <class>com.github.carljmosca.zmv.entity.ControlPresets</class>
+    <class>com.github.carljmosca.zmv.entity.Frames</class>
+    <class>com.github.carljmosca.zmv.entity.Users</class>
+    <class>com.github.carljmosca.zmv.entity.Monitors</class>
+    <class>com.github.carljmosca.zmv.entity.Controls</class>
+    <class>com.github.carljmosca.zmv.entity.Devices</class>
+    <class>com.github.carljmosca.zmv.entity.Filters</class>
+    <class>com.github.carljmosca.zmv.entity.MonitorPresets</class>
+    <class>com.github.carljmosca.zmv.entity.States</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/zm?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="Are2Dee2"/>
+    </properties>
+  </persistence-unit>
+</persistence>
