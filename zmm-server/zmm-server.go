@@ -53,7 +53,7 @@ func main() {
 			result gin.H
 		)
 		id := c.Param("id")
-		row := db.QueryRow("select id, Name, StartTime from events where id = ?;", id)
+		row := db.QueryRow("select id, Name, StartTime from Events where id = ?;", id)
 		err = row.Scan(&event.Id, &event.Name, &event.StartTime)
 		if err != nil {
 			// If no results send null
@@ -89,9 +89,9 @@ func main() {
 		} else if size > 100 {
 			size = 100
 		}
-		rowsCount := db.QueryRow("select count(*) as count from events")
+		rowsCount := db.QueryRow("select count(*) as count from Events")
 		rowsCount.Scan(&totalElements)
-		rows, err := db.Query("select id, Name, StartTime from events limit ? offset ?;", size, page * size)
+		rows, err := db.Query("select id, Name, StartTime from Events limit ? offset ?;", size, page * size)
 		if err != nil {
 			fmt.Print(err.Error())
 		}
