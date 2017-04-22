@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
-go build -o zmm-server .
+CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
 docker build -t zmm-server -f Dockerfile.rpi.scratch .

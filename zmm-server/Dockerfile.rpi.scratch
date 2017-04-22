@@ -1,3 +1,4 @@
 FROM hypriot/rpi-alpine-scratch
-ADD zmm-server /
-CMD ["/zmm-server"]
+
+ADD main /
+CMD ["/main"]
