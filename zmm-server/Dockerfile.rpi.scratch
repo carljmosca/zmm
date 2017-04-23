@@ -1,4 +1,10 @@
 FROM hypriot/rpi-alpine-scratch
 
+RUN apk update && \
+apk upgrade && \
+apk add ca-certificates && \
+rm -rf /var/cache/apk/*
+
 ADD main /
+ADD zmm-clientid-google.json /
 CMD ["/main"]

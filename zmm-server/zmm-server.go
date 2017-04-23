@@ -58,8 +58,8 @@ func main() {
 	router := gin.Default()
 
 	// init settings for google auth
-	redirectURL = "http://localhost:3000"
-	credFile = "/usr/local/zmm-clientid-google.json"
+	redirectURL = "https://apps.moscaville.com"
+	credFile = "/zmm-clientid-google.json"
 	google.Setup(redirectURL, credFile, scopes, secret)
 	router.Use(google.Session(sessionName))
 
