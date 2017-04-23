@@ -23,6 +23,7 @@ func main() {
 	const DB_NAME = "DB_NAME"
 	const DB_USERNAME = "DB_USERNAME"
 	const DB_PASSWORD = "DB_PASSWORD"
+	const REDIRECT_URL = "REDIRECT_URL"
 
 	var dataSourceName string
 	dataSourceName = os.Getenv(DB_USERNAME) + ":" + os.Getenv(DB_PASSWORD) + "@tcp(" + os.Getenv(DB_HOST) + ":"
@@ -58,7 +59,7 @@ func main() {
 	router := gin.Default()
 
 	// init settings for google auth
-	redirectURL = "https://apps.moscaville.com"
+	redirectURL = os.Getenv(REDIRECT_URL)
 	credFile = "/zmm-clientid-google.json"
 	google.Setup(redirectURL, credFile, scopes, secret)
 	router.Use(google.Session(sessionName))
