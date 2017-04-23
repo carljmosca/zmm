@@ -4,14 +4,17 @@ import (
 	"os"
 	"database/sql"
 	"fmt"
+	"math"
 	"net/http"
 	"time"
 	"strconv"
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
-
-	"math"
+	"github.com/zalando/gin-oauth2/google"
+	_ "cloud.google.com/go/compute/metadata"
 )
+
+var redirectURL, credFile string
 
 func main() {
 
@@ -44,10 +47,35 @@ func main() {
 		Name string
 		StartTime time.Time
 	}
+
+	scopes := []string{
+		"https://www.googleapis.com/auth/userinfo.email",
+		// You have to select your own scope from here -> https://developers.google.com/identity/protocols/googlescopes#google_sign-in
+	}
+	secret := []byte("secret")
+	sessionName := "goquestsession"
+
 	router := gin.Default()
 
+	// init settings for google auth
+	redirectURL = "http://localhost:3000"
+	credFile = "/usr/local/zmm-clientid-google.json"
+	google.Setup(redirectURL, credFile, scopes, secret)
+	router.Use(google.Session(sessionName))
+
+	router.GET("/login", google.LoginHandler)
+
+
+	// protected url group
+	private := router.Group("/auth")
+	private.Use(google.Auth())
+	private.GET("/", UserInfoHandler)
+	private.GET("/api", func(ctx *gin.Context) {
+		ctx.JSON(200, gin.H{"message": "Hello from private for groups"})
+	})
+
 	// GET an event
-	router.GET("/event/:id", func(c *gin.Context) {
+	private.GET("/event/:id", func(c *gin.Context) {
 		var (
 			event Event
 			result gin.H
@@ -71,7 +99,7 @@ func main() {
 	})
 
 	// GET all events
-	router.GET("/events", func(c *gin.Context) {
+	private.GET("/events", func(c *gin.Context) {
 		var (
 			event  Event
 			events []Event
@@ -114,4 +142,8 @@ func main() {
 	})
 
 	router.Run(":3000")
+}
+
+func UserInfoHandler(ctx *gin.Context) {
+	ctx.JSON(http.StatusOK, gin.H{"Hello": "from private", "user": ctx.MustGet("user").(google.User)})
 }
